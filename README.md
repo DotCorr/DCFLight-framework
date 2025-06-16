@@ -2,16 +2,24 @@
 # DCFlight
 # 🚧 This CLI is Under Development
 
-Its aim is to simplify cross-platform app development for personal future projects.
-
-## ⚠️ Important Notice
-
-Just move from experimental to modularization where the framework is now modularised into a package. Although cli is not complete to allow the app run independent from the flutter cli, with hot reload support etc, the main framework as a package is complete (More platforms can be ported over but fundamentally done)
-
-
 ## 📌 Key Points
-DCFlight can be used in any flutter app to diverge from the flutter framework and render native UI. This involves extra work with no guarantee of hot relaod/ restart support or any dev tools. The DCFlight Cli is therefopre advised to be used.
-It is almost impossible to decouple the Dart VM from Flutter. To work around this:
+DCFlight in short is a framework that renders actual native UI. Built on top of the flutter engine(Flutter engine here provides us the dart runtime and some utilities. More like Hermes in react native). As seen below DCFlight:
+``` swift
+import dcflight
+
+@main                                                  
+@objc class AppDelegate: DCAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+      GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+}
+```
+It diverges from the flutter abstraction for UI rendering and renders the root view that dcflight depends on to render native UI. No platform views and no absurd abstractions. As a bonus you can still render a flutter Widget by using the ```WidgetToDCFAdaptor``` without impacting performance. 
+
 
 ## 📝 Dart Example
 
@@ -93,8 +101,11 @@ class DCFGo extends StatefulComponent {
 ```
 
 
-### 3️⃣ Initially Inspired React
+## ☕ Buy Me a Coffee  
 
-The architecture is loosely inspired by Flutter and React, Flutter Engine serves as the dart runtime, more like Hermes for React Native. The syntax has been made flutter-like for familiarity and has borrowed concepts like state hooks and vdom-like architecture from React Native.
+> **Your support fuels the grind. Every contribution keeps this journey alive.**  
 
+[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://coff.ee/squirelboy360)  
+
+[https://coff.ee/squirelboy360**](https://coff.ee/squirelboy360)
 
