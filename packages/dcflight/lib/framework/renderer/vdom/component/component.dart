@@ -235,9 +235,16 @@ abstract class StatefulComponent extends DCFComponentNode {
 
   /// Run effects after render - called by VDOM
   void runEffectsAfterRender() {
+    if (kDebugMode && runtimeType.toString().contains('Portal')) {
+      print('🎯 runEffectsAfterRender called for $runtimeType - ${_hooks.length} hooks');
+    }
+    
     for (var i = 0; i < _hooks.length; i++) {
       final hook = _hooks[i];
       if (hook is EffectHook) {
+        if (kDebugMode && runtimeType.toString().contains('Portal')) {
+          print('🎯 Running effect hook $i for $runtimeType');
+        }
         hook.runEffect();
       }
     }

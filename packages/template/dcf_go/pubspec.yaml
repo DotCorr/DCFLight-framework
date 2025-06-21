@@ -8,14 +8,19 @@ version: 1.0.0+1
 environment:
   sdk: ^3.7.2
 
-
 dependencies:
   flutter:
     sdk: flutter
+# framework dependencies
+  dcflight:
+    path: ../../dcflight
 
-  dcflight: ^0.0.1
+  dcf_primitives:
+    path: ../../dcf_primitives
 
-  dcf_primitives: ^0.0.1
+  # dcflight: ^0.0.1
+  # dcf_primitives: ^0.0.1
+
   icons_launcher: ^3.0.1
 
 dev_dependencies:

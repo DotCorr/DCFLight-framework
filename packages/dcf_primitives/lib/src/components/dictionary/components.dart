@@ -26,8 +26,7 @@ export '../dropdown_component.dart';
 export '../flat_list_component.dart';
 
 // 🚀 Export NEW primitive components
-export '../modal_component.dart';
-export '../modal_header_component.dart';
+export '../modal_component.dart'; // Old modal (for compatibility)
 // Remove portal_component export since DCFPortal was removed and portal functionality is now internal
 export '../toggle_component.dart';
 export '../checkbox_component.dart';

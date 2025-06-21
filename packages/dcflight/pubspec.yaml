@@ -11,7 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dcf_primitives: ^0.0.1
+  # framework dependencies (prod)
+
+  # dcf_primitives: ^0.0.1
+# framework dependencies (local)
+  dcf_primitives:
+    path: ../dcf_primitives
   
 
 dev_dependencies:

@@ -11,7 +11,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dcflight: ^0.0.1
+# framework dependencies (prod)
+  # dcflight: ^0.0.1
+
+# framework dependencies (local)
+  dcflight:
+   path : ../dcflight
+
+  
 
 dev_dependencies:
   flutter_test:

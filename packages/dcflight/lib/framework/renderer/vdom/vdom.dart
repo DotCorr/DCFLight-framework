@@ -51,6 +51,7 @@ class VDom {
   /// Flag to track batch updates in progress
   bool _batchUpdateInProgress = false;
   
+  
   /// Root component for the application
   DCFComponentNode? rootComponent;
   
@@ -177,17 +178,17 @@ class VDom {
         // If that fails, try other common patterns
       }
       
-      // Try specific patterns for common event types
-      if (eventData.containsKey('text')) {
-        // Handle TextInput onChangeText events that expect a string parameter
-        try {
-          final text = eventData['text'] as String? ?? '';
-          Function.apply(handler, [text]);
-          return;
-        } catch (e) {
-          // Continue to next pattern
-        }
-      }
+      // // Try specific patterns for common event types
+      // if (eventData.containsKey('text')) {
+      //   // Handle TextInput onChangeText events that expect a string parameter
+      //   try {
+      //     final text = eventData['text'] as String? ?? '';
+      //     Function.apply(handler, [text]);
+      //     return;
+      //   } catch (e) {
+      //     // Continue to next pattern
+      //   }
+      // }
       
       if (eventData.containsKey('width') && eventData.containsKey('height')) {
         // Handle onContentSizeChange events that might expect (double, double)
@@ -448,19 +449,35 @@ class VDom {
         
         // Check if this fragment is a portal placeholder
         if (node.metadata != null && node.metadata!['isPortalPlaceholder'] == true) {
-          // This is a portal placeholder fragment - handle portal logic
+          // This is a portal placeholder fragment - the enhanced portal manager
+          // handles rendering the children to the target
           final targetId = node.metadata!['targetId'] as String?;
           final portalId = node.metadata!['portalId'] as String?;
           
           if (targetId != null && portalId != null) {
             // Portal placeholder fragments don't render anything here
-            // The portal manager handles rendering the children to the target
+            // The enhanced portal manager handles all the portal logic
             
             if (kDebugMode) {
-              print('🎯 VDom: Portal placeholder fragment for target: $targetId');
+              print('🎯 VDom: Portal placeholder fragment for target: $targetId, portal: $portalId');
             }
             
             return null; // Portal placeholders have no native view
+          }
+        }
+        
+        // Check if this fragment is a portal target
+        if (node.metadata != null && node.metadata!['isPortalTarget'] == true) {
+          final targetId = node.metadata!['targetId'] as String?;
+          
+          if (targetId != null) {
+            if (kDebugMode) {
+              print('🎯 VDom: Portal target fragment: $targetId');
+            }
+            
+            // For portal targets, we should render normally but also allow
+            // the portal manager to inject content
+            // The enhanced portal manager will handle the portal content injection
           }
         }
         
@@ -976,13 +993,7 @@ class VDom {
       // Find changed props using proper diffing algorithm
       final changedProps = _diffProps(oldElement.props, newElement.props);
       
-      // Add debugging for text components specifically
-      if (oldElement.type == 'Text' && kDebugMode) {
-        // print('🔍 Text Component Prop Diff:');
-        // print('  Old props: ${oldElement.props}');
-        // print('  New props: ${newElement.props}');
-        // print('  Changed props being sent to native: $changedProps');
-      }
+   
       
       // Update props if there are changes
       if (changedProps.isNotEmpty) {
@@ -1147,6 +1158,19 @@ class VDom {
     for (var oldChild in oldChildren) {
       if (!processedOldChildren.contains(oldChild)) {
         hasStructuralChanges = true; // Removal is a structural change
+        
+        // CRITICAL FIX: Call componentWillUnmount on removed components
+        try {
+          oldChild.componentWillUnmount();
+          if (kDebugMode) {
+            print('🗑️ Called componentWillUnmount on removed keyed child: ${oldChild.runtimeType}');
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('❌ Error during componentWillUnmount on removed keyed child: $e');
+          }
+        }
+        
         final viewId = oldChild.effectiveNativeViewId;
         if (viewId != null) {
           await _nativeBridge.deleteView(viewId);
@@ -1205,7 +1229,21 @@ class VDom {
       // Remove any extra old children - this is a structural change
       hasStructuralChanges = true;
       for (int i = commonLength; i < oldChildren.length; i++) {
-        final viewId = oldChildren[i].effectiveNativeViewId;
+        final oldChild = oldChildren[i];
+        
+        // CRITICAL FIX: Call componentWillUnmount on removed components
+        try {
+          oldChild.componentWillUnmount();
+          if (kDebugMode) {
+            print('🗑️ Called componentWillUnmount on removed child: ${oldChild.runtimeType}');
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('❌ Error during componentWillUnmount on removed child: $e');
+          }
+        }
+        
+        final viewId = oldChild.effectiveNativeViewId;
         if (viewId != null) {
           await _nativeBridge.deleteView(viewId);
           _nodesByViewId.remove(viewId);

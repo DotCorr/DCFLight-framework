@@ -49,10 +49,7 @@ export 'package:dcflight/framework/utilities/flutter_framework_interop.dart'
 // Core Infrastructure
 export 'framework/renderer/vdom/index.dart';
 
-// Portal system
-export 'framework/renderer/vdom/portal/dcf_portal.dart';
-export 'framework/renderer/vdom/portal/dcf_portal_container.dart';
-export 'framework/renderer/vdom/portal/portal_system.dart';
+
 
 // Native Bridge System
 export 'framework/renderer/interface/interface.dart';
@@ -70,7 +67,7 @@ export 'framework/utilities/screen_utilities.dart';
 
 // DevTools (debug mode only)
 export 'framework/devtools/hot_restart.dart';
-// export 'package:dcf_primitives/dcf_primitives.dart';
+export 'package:dcf_primitives/dcf_primitives.dart';
 export 'framework/protocol/component_registry.dart';
 export 'framework/protocol/plugin_protocol.dart';
 import 'package:dcflight/framework/renderer/vdom/component/component_node.dart';
@@ -80,7 +77,6 @@ import 'framework/renderer/interface/interface.dart';
 import 'framework/utilities/screen_utilities.dart';
 import 'framework/protocol/plugin_protocol.dart';
 import 'framework/devtools/hot_restart.dart';
-import 'framework/renderer/vdom/portal/portal_system.dart';
 import 'package:flutter/material.dart';
 
 /// DCFlight Framework entry points
@@ -100,8 +96,6 @@ class DCFlight {
     // Initialize VDOM API with the bridge
     await VDomAPI.instance.init(bridge);
 
-    // Initialize portal system
-    PortalSystem.instance.initialize();
 
     // Register core plugin
     PluginRegistry.instance.registerPlugin(CorePlugin.instance);

@@ -134,26 +134,35 @@ class DCFModal extends StatelessComponent {
     }
     
     // ✅ SIMPLE FIX: Return modal directly with children - no wrapper needed!
+    // 🔥 Build props map with proper display handling
+    Map<String, dynamic> props = {
+      'visible': visible,
+      'title': title,
+      'detents': detents,
+      'selectedDetentIndex': selectedDetentIndex,
+      'showDragIndicator': showDragIndicator,
+      'cornerRadius': cornerRadius,
+      'isDismissible': isDismissible,
+      'allowsBackgroundDismiss': allowsBackgroundDismiss,
+      'transitionStyle': transitionStyle,
+      'capturesStatusBarAppearance': capturesStatusBarAppearance,
+      'definesPresentationContext': definesPresentationContext,
+      'providesTransitionContext': providesTransitionContext,
+      
+      ...layout.toMap(),
+      ...style.toMap(),
+      ...eventMap,
+    };
+    
+    // 🔥 CRITICAL FIX: Always enforce display property based on visibility
+    // This ensures style.toMap() cannot override the visibility-based display setting
+    props['display'] = visible ? 'flex' : 'none';
+    
+    print('🎭 DCFModal props being sent to native: visible=$visible, display=${props['display']}');
+    
     return DCFElement(
       type: 'Modal',
-      props: {
-        'visible': visible,
-        'title': title,
-        'detents': detents,
-        'selectedDetentIndex': selectedDetentIndex,
-        'showDragIndicator': showDragIndicator,
-        'cornerRadius': cornerRadius,
-        'isDismissible': isDismissible,
-        'allowsBackgroundDismiss': allowsBackgroundDismiss,
-        'transitionStyle': transitionStyle,
-        'capturesStatusBarAppearance': capturesStatusBarAppearance,
-        'definesPresentationContext': definesPresentationContext,
-        'providesTransitionContext': providesTransitionContext,
-       
-        ...layout.toMap(),
-        ...style.toMap(),
-        ...eventMap,
-      },
+      props: props,
       children: children, // ✅ Direct children - simple and works!
     );
   }

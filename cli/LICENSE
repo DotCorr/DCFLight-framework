@@ -1,0 +1,43 @@
+MIT License
+
+Copyright (c) 2025 Dotcorr Studio and affiliates
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+DCFlight Framework
+==================
+
+This repository contains the DCFlight framework, a cross-platform mobile development 
+framework built with Dart and Flutter. DCFlight provides a component-based architecture 
+for building native mobile applications with a React-like development experience.
+
+Components included in this license:
+- DCFlight Core Framework (packages/dcflight)
+- DCF Primitives Component Library (packages/dcf_primitives)
+- DCFlight CLI Tools (cli)
+- Project Templates (packages/template)
+- Documentation and Examples
+
+Third-party dependencies may be subject to their own licenses. Please refer to the 
+individual package.json, pubspec.yaml, and podspec files for dependency-specific 
+license information.
+
+For more information about DCFlight, visit: https://github.com/dotcorr/dcflight

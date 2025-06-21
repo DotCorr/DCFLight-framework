@@ -46,8 +46,6 @@ import dcflight
        
         DCFComponentRegistry.shared.registerComponent("Modal", componentClass: DCFModalComponent.self)
        
-        DCFComponentRegistry.shared.registerComponent("ModalHeader", componentClass: DCFModalHeaderComponent.self)
-       
         DCFComponentRegistry.shared.registerComponent("Toggle", componentClass: DCFToggleComponent.self)
         
         DCFComponentRegistry.shared.registerComponent("Checkbox", componentClass: DCFCheckboxComponent.self)

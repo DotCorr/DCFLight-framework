@@ -348,6 +348,49 @@ DCFAlert(
 - Use bridge logs to verify prop transmission
 - Monitor component lifecycle for memory leaks
 
+## Portal System Integration
+
+### Portal Architecture in VDOM
+
+The VDOM includes sophisticated portal support that allows components to render children into different parts of the native view hierarchy:
+
+```dart
+// Portal components integrate seamlessly with VDOM reconciliation
+class DCFPortal extends StatefulComponent {
+  final String targetId;
+  final List<DCFComponentNode> children;
+  
+  @override
+  void initState() {
+    // Register with portal manager during VDOM component lifecycle
+    PortalManager.registerPortal(portalId, targetId);
+  }
+  
+  @override
+  DCFComponentNode render() {
+    // Portal content goes through normal VDOM reconciliation
+    return DCFFragment(children: children);
+  }
+}
+```
+
+### Portal Reconciliation Flow
+
+1. **Portal Registration**: Portals register with manager during component mount
+2. **Content Rendering**: Portal children render as normal VDOM nodes
+3. **Target Mapping**: Portal manager maps content to appropriate native views
+4. **Native Update**: Manager calls `setChildren()` on target native views
+5. **Cleanup**: Portal unregistration during component disposal
+
+### Portal vs Normal VDOM
+
+| Aspect | Normal VDOM | Portal VDOM |
+|--------|-------------|-------------|
+| Parent-Child | Direct hierarchy | Indirect via manager |
+| Reconciliation | Single tree | Split across trees |
+| Performance | Direct updates | Batched portal updates |
+| Memory | Linear structure | Additional mapping layer |
+
 ## Architecture Benefits
 
 1. **Performance**: Smart diffing reduces native calls by ~70%
@@ -355,5 +398,11 @@ DCFAlert(
 3. **Scalability**: Efficient reconciliation handles complex UIs
 4. **Debugging**: Comprehensive logging for troubleshooting
 5. **Flexibility**: Supports both simple and complex component patterns
+6. **Portal Support**: Seamless React-like portal integration with VDOM reconciliation
 
 The VDOM layer is the foundation that makes DCFlight's declarative UI paradigm both powerful and performant, bridging the gap between Dart's reactive programming model and native platform capabilities.
+
+## Related Documentation
+
+- [Portal System Guide](./PORTAL_SYSTEM_GUIDE.md) - Complete portal usage guide
+- [Portal & VDOM Integration](./PORTAL_VDOM_INTEGRATION.md) - Technical deep-dive into portal reconciliation

@@ -12,9 +12,9 @@ import QuartzCore
 
 /// Manages layout for DCFLight components
 /// Now handles automatic layout calculations natively when layout props change
-class DCFLayoutManager {
+public class DCFLayoutManager {
     // Singleton instance
-    static let shared = DCFLayoutManager()
+    public static let shared = DCFLayoutManager()
     
     // Set of views using absolute layout (controlled by Dart)
     private var absoluteLayoutViews = Set<UIView>()
@@ -394,7 +394,7 @@ extension DCFLayoutManager {
     }
     
     // Update a node's layout properties
-    func updateNodeWithLayoutProps(nodeId: String, componentType: String, props: [String: Any]) {
+    public func updateNodeWithLayoutProps(nodeId: String, componentType: String, props: [String: Any]) {
         YogaShadowTree.shared.updateNodeLayoutProps(nodeId: nodeId, props: props)
         
         // ADDED: Trigger automatic layout calculation when layout props change
@@ -405,7 +405,7 @@ extension DCFLayoutManager {
     }
     
     // Manually trigger layout calculation (useful for initial layout or when needed)
-    func triggerLayoutCalculation() {
+    public func triggerLayoutCalculation() {
         needsLayoutCalculation = true
         scheduleLayoutCalculation()
     }

@@ -5,15 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-
-import 'package:dcf_go/app/gradient.dart';
-import 'package:dcf_go/app/really_long_list.dart';
-import 'package:dcf_go/app/validation_test.dart';
-import 'package:dcf_go/app/list_state_perf.dart';
-import 'package:dcf_go/app/modal_test.dart';
-import 'package:dcf_go/app/swipeable_test.dart';
-import 'package:dcf_go/app/component_showcase.dart';
-import 'package:dcf_go/app/portal_test.dart';
+import 'package:dcf_go/app/examples/gradient.dart';
+import 'package:dcf_go/app/examples/really_long_list.dart';
+import 'package:dcf_go/app/examples/validation_test.dart';
+import 'package:dcf_go/app/examples/list_state_perf.dart';
+import 'package:dcf_go/app/examples/modal_test.dart';
+import 'package:dcf_go/app/examples/swipeable_test.dart';
+import 'package:dcf_go/app/examples/component_showcase.dart';
+import 'package:dcf_go/app/examples/portal_test.dart';
 import 'package:dcflight/dcflight.dart';
 
 final pagestate = Store<int>(0);
@@ -25,15 +24,19 @@ class App extends StatefulComponent {
     final pagestateLocal = useStore(pagestate);
 
     // Removed DCFPortalProvider wrapper to test modal rendering
-    return DCFSafeAreaView(
-      layout: LayoutProps(flex: 1, padding: 8),
+    return DCFView(
+      layout: LayoutProps(flex: 1),
       children: [
-        DCFDropdown(
-          layout: LayoutProps(height: 40, marginBottom: 8),
-          onValueChange: (v) {
-            pagestateLocal.setState(int.parse(v['value']));
-            print("Selected value: $v, Item: $v");
-          },
+        // Main App Content
+        DCFSafeAreaView(
+          layout: LayoutProps(flex: 1, padding: 8),
+          children: [
+            DCFDropdown(
+              layout: LayoutProps(height: 40, marginBottom: 8),
+              onValueChange: (v) {
+                pagestateLocal.setState(int.parse(v['value']));
+                print("Selected value: $v, Item: $v");
+              },
           onClose: (v) {
             print("closed");
           },
@@ -50,6 +53,7 @@ class App extends StatefulComponent {
               DCFDropdownMenuItem(title: "Swipeable Test", value: "5"),
               DCFDropdownMenuItem(title: "Component Showcase", value: "6"),
               DCFDropdownMenuItem(title: "Portal Test", value: "7"),
+             
             ],
             selectedValue: pagestateLocal.state.toString(),
           ),
@@ -99,7 +103,7 @@ class App extends StatefulComponent {
                 gap: 8,
                 height: 50,
                 flexWrap: YogaWrap.nowrap,
-                width: 500,
+                width: "100%",
               ),
               children: [
                 DCFGestureDetector(
@@ -354,6 +358,10 @@ class App extends StatefulComponent {
           ], // Close DCFScrollView children
         ), // Close DCFScrollView
       ], // Close DCFSafeAreaView children
-    ); // Close DCFSafeAreaView (return statement)
+        ), // Close DCFSafeAreaView
+        
+      
+      ], // Close main DCFView children
+    ); // Close main DCFView (return statement)
   }
 }

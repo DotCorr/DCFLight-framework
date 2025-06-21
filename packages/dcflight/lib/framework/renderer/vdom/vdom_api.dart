@@ -105,6 +105,12 @@ class VDomAPI {
     await _vdom.updateViewChildren(targetViewId, childViewIds);
   }
   
+  /// Delete orphaned views (for portal cleanup)
+  Future<void> deleteViews(List<String> viewIds) async {
+    await isReady;
+    await _vdom.deleteViews(viewIds);
+  }
+  
   /// Log VDOM state for debugging
   void debugLog(String message) {
     if (kDebugMode) {

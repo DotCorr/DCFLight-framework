@@ -118,7 +118,6 @@ class DCFSvgComponent: NSObject, DCFComponent {
         } else {
             // If we reach here, the image couldn't be loaded
             propagateEvent(on: imageView, eventName: "onError", data: ["error": "SVG not found: \(asset)"])
-        }
     }
         
         // Load SVG using SVGKit

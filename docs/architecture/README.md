@@ -43,6 +43,24 @@ Comprehensive documentation of DCFlight's adaptive theming requirements:
 - Dark mode support and testing
 - Framework-level theming control
 
+### **🌀 [Portal System Guide](./PORTAL_SYSTEM_GUIDE.md)**
+Complete guide to DCFlight's robust, production-ready React-like portal system:
+- Portal architecture and use cases
+- DCFPortal and DCFPortalTarget components
+- Conditional rendering and multiple portals per target
+- Automatic cleanup and lifecycle management
+- Portal state management patterns
+- Global portal target strategies
+
+### **🔬 [Portal & VDOM Integration](./PORTAL_VDOM_INTEGRATION.md)**
+Technical deep-dive into portal and VDOM interaction:
+- Enhanced portal manager architecture
+- Automatic cleanup and effect integration
+- Multiple portals per target support
+- VDOM reconciliation fixes and improvements
+- Performance optimizations and best practices
+- Production-ready implementation details
+
 ## 🎯 **Target Audience**
 
 ### **Framework Contributors**

@@ -1,7 +1,7 @@
 
 // Test for store usage validation system
 
-import 'package:dcf_go/app/gradient.dart';
+import 'package:dcf_go/app/examples/gradient.dart';
 import 'package:dcflight/dcflight.dart';
 
 /// Test app that demonstrates validation warnings

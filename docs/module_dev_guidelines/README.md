@@ -42,6 +42,28 @@ Complete guide for building DCFlight-compatible components and modules:
 - Memory management and cleanup
 - Error handling and validation
 
+### **🎭 [Presentable Components Guide](./PRESENTABLE_COMPONENTS_GUIDE.md)**
+Specialized guide for implementing components that present outside the normal view hierarchy:
+
+#### **Core Patterns**
+- Placeholder view pattern for anchoring
+- Visibility management with proper display handling
+- Child management between placeholder and presented states
+- Content layout with full abstraction layer control
+
+#### **Implementation Examples**
+- Modal components (sheets, full-screen)
+- Popover components (tooltips, dropdowns)
+- Alert components (system alerts, custom dialogs)
+- Bottom sheet components
+- Custom overlay components
+
+#### **DRY Compliance**
+- Consistent patterns across all presentable types
+- Proper event propagation (onShow, onDismiss)
+- Memory management and tracking
+- Platform-specific optimizations
+
 ## 🎯 **Quick Start for Module Developers**
 
 ### **1. Component Implementation Template**
