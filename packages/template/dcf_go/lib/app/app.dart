@@ -1,16 +1,7 @@
-/*
- * Copyright (c) Dotcorr Studio. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import 'package:dcf_go/app/examples/gradient.dart';
 import 'package:dcf_go/app/examples/really_long_list.dart';
-import 'package:dcf_go/app/examples/validation_test.dart';
-import 'package:dcf_go/app/examples/list_state_perf.dart';
+import 'package:dcf_go/app/examples/home.dart';
 import 'package:dcf_go/app/examples/modal_test.dart';
-import 'package:dcf_go/app/examples/swipeable_test.dart';
 import 'package:dcf_go/app/examples/component_showcase.dart';
 import 'package:dcf_go/app/examples/portal_test.dart';
 import 'package:dcflight/dcflight.dart';
@@ -25,13 +16,36 @@ class App extends StatefulComponent {
 
     // Removed DCFPortalProvider wrapper to test modal rendering
     return DCFView(
+      adaptive: false,
       layout: LayoutProps(flex: 1),
       children: [
         // Main App Content
         DCFSafeAreaView(
           layout: LayoutProps(flex: 1, padding: 8),
           children: [
-            DCFDropdown(
+           
+        DCFView(
+          layout: LayoutProps(flex: 1, flexDirection: YogaFlexDirection.column),
+          children: [
+            pagestateLocal.state == 0
+                ? Home()
+              
+                : pagestateLocal.state == 1
+                ? GradientTest()
+                : pagestateLocal.state == 2
+                ? ReallyLongList()
+                : pagestateLocal.state == 3
+                ? ModalTest()
+              
+                : pagestateLocal.state == 4
+                ? ComponentShowcase()
+                : pagestateLocal.state == 5
+                ? PortalTest()
+                : DCFView(),
+          ],
+        ),
+
+         DCFDropdown(
               layout: LayoutProps(height: 40, marginBottom: 8),
               onValueChange: (v) {
                 pagestateLocal.setState(int.parse(v['value']));
@@ -45,40 +59,17 @@ class App extends StatefulComponent {
           },
           dropdownProps: DCFDropdownProps(
             items: [
-              DCFDropdownMenuItem(title: "Validation Test", value: "0"),
-              DCFDropdownMenuItem(title: "List State Perf", value: "1"),
-              DCFDropdownMenuItem(title: "Gradient Test", value: "2"),
-              DCFDropdownMenuItem(title: "Really Long List", value: "3"),
-              DCFDropdownMenuItem(title: "Modal & Alert Test", value: "4"),
-              DCFDropdownMenuItem(title: "Swipeable Test", value: "5"),
-              DCFDropdownMenuItem(title: "Component Showcase", value: "6"),
-              DCFDropdownMenuItem(title: "Portal Test", value: "7"),
+              DCFDropdownMenuItem(title: "Home", value: "0"),
+     
+              DCFDropdownMenuItem(title: "Gradient Test", value: "1"),
+              DCFDropdownMenuItem(title: "Really Long List", value: "2"),
+              DCFDropdownMenuItem(title: "Modal & Alert Test", value: "3"),
+              DCFDropdownMenuItem(title: "Component Showcase", value: "4"),
+              DCFDropdownMenuItem(title: "Portal Test", value: "5"),
              
             ],
             selectedValue: pagestateLocal.state.toString(),
           ),
-        ),
-        DCFView(
-          layout: LayoutProps(flex: 1, flexDirection: YogaFlexDirection.column),
-          children: [
-            pagestateLocal.state == 0
-                ? ValidationTestApp()
-                : pagestateLocal.state == 1
-                ? ListStatePerf()
-                : pagestateLocal.state == 2
-                ? GradientTest()
-                : pagestateLocal.state == 3
-                ? ReallyLongList()
-                : pagestateLocal.state == 4
-                ? ModalTest()
-                : pagestateLocal.state == 5
-                ? SwipeableTest()
-                : pagestateLocal.state == 6
-                ? ComponentShowcase()
-                : pagestateLocal.state == 7
-                ? PortalTest()
-                : DCFView(),
-          ],
         ),
 
         DCFScrollView(
@@ -261,6 +252,8 @@ class App extends StatefulComponent {
                   ],
                 ),
 
+              
+
                 DCFGestureDetector(
                   onTap: (v) {
                     pagestateLocal.setState(5);
@@ -280,7 +273,7 @@ class App extends StatefulComponent {
                       children: [
                         DCFIcon(
                           iconProps: DCFIconProps(
-                            name: DCFIcons.hand,
+                            name: DCFIcons.grid3x3,
                             color:
                                 pagestateLocal.state == 5
                                     ? Colors.blue
@@ -311,40 +304,9 @@ class App extends StatefulComponent {
                       children: [
                         DCFIcon(
                           iconProps: DCFIconProps(
-                            name: DCFIcons.grid3x3,
-                            color:
-                                pagestateLocal.state == 6
-                                    ? Colors.blue
-                                    : Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-
-                DCFGestureDetector(
-                  onTap: (v) {
-                    pagestateLocal.setState(7);
-                  },
-                  layout: LayoutProps(
-                    height: 50,
-                    width: 50,
-                    marginHorizontal: 4,
-                  ),
-                  children: [
-                    DCFView(
-                      layout: LayoutProps(
-                        flex: 1,
-                        justifyContent: YogaJustifyContent.center,
-                        alignItems: YogaAlign.center,
-                      ),
-                      children: [
-                        DCFIcon(
-                          iconProps: DCFIconProps(
                             name: DCFIcons.shuffle,
                             color:
-                                pagestateLocal.state == 7
+                                pagestateLocal.state == 6
                                     ? Colors.blue
                                     : Colors.grey,
                           ),

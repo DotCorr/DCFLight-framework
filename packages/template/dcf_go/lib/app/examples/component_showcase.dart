@@ -1,7 +1,6 @@
 
 
 import 'package:dcflight/dcflight.dart';
-import 'package:dcf_primitives/dcf_primitives.dart';
 
 class ComponentShowcase extends StatefulComponent {
   @override
@@ -40,7 +39,7 @@ class ComponentShowcase extends StatefulComponent {
           content: "🎨 Component Showcase",
           textProps: DCFTextProps(
             fontSize: 24,
-            fontWeight: "bold",
+            fontWeight: DCFFontWeight.bold,
             color: Colors.black,
           ),
           layout: LayoutProps(marginBottom: 20, height: 30),
@@ -51,7 +50,7 @@ class ComponentShowcase extends StatefulComponent {
           content: "Toggle Styles",
           textProps: DCFTextProps(
             fontSize: 18,
-            fontWeight: "600",
+            fontWeight: DCFFontWeight.semibold,
             color: Colors.black87,
           ),
           layout: LayoutProps(marginBottom: 16, height: 25),
@@ -173,7 +172,7 @@ class ComponentShowcase extends StatefulComponent {
           content: "Checkbox Sizes",
           textProps: DCFTextProps(
             fontSize: 18,
-            fontWeight: "600",
+            fontWeight: DCFFontWeight.semibold,
             color: Colors.black87,
           ),
           layout: LayoutProps(marginBottom: 16, height: 25),
@@ -295,7 +294,7 @@ class ComponentShowcase extends StatefulComponent {
           content: "Quick Actions",
           textProps: DCFTextProps(
             fontSize: 18,
-            fontWeight: "600",
+            fontWeight: DCFFontWeight.semibold,
             color: Colors.black87,
           ),
           layout: LayoutProps(marginBottom: 16, height: 25),
@@ -366,7 +365,7 @@ class ComponentShowcase extends StatefulComponent {
               content: "Status Summary",
               textProps: DCFTextProps(
                 fontSize: 16,
-                fontWeight: "600",
+                fontWeight: DCFFontWeight.semibold,
                 color: Colors.blue.shade800,
               ),
               layout: LayoutProps(marginBottom: 8, height: 22),
@@ -408,7 +407,7 @@ class ComponentShowcase extends StatefulComponent {
               content: "Component Information",
               textProps: DCFTextProps(
                 fontSize: 16,
-                fontWeight: "600",
+                fontWeight: DCFFontWeight.semibold,
                 color: Colors.black87,
               ),
               layout: LayoutProps(marginBottom: 8, height: 22),
@@ -437,7 +436,7 @@ class ComponentShowcase extends StatefulComponent {
           content: "Performance Test",
           textProps: DCFTextProps(
             fontSize: 18,
-            fontWeight: "600",
+            fontWeight: DCFFontWeight.semibold,
             color: Colors.black87,
           ),
           layout: LayoutProps(marginBottom: 16, height: 25),
@@ -460,7 +459,7 @@ class ComponentShowcase extends StatefulComponent {
               content: "Multiple Components Test (10 checkboxes)",
               textProps: DCFTextProps(
                 fontSize: 14,
-                fontWeight: "600",
+                fontWeight: DCFFontWeight.semibold,
                 color: Colors.purple.shade800,
               ),
               layout: LayoutProps(marginBottom: 12, height: 20),

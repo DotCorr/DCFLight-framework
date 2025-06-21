@@ -18,14 +18,14 @@ class ModalTest extends StatefulComponent {
       children: [
         DCFText(
           content: "🚀 DCF Primitives Test",
-          textProps: DCFTextProps(fontSize: 24, fontWeight: "bold"),
+          textProps: DCFTextProps(fontSize: 24, fontWeight: DCFFontWeight.bold),
           layout: LayoutProps(marginBottom: 20.0, height: 30.0),
         ),
 
         // Modal Tests
         DCFText(
           content: "Native Modal Components",
-          textProps: DCFTextProps(fontSize: 18, fontWeight: "600"),
+          textProps: DCFTextProps(fontSize: 18, fontWeight: DCFFontWeight.semibold),
           layout: LayoutProps(marginBottom: 16.0, height: 25.0),
         ),
 
@@ -58,7 +58,7 @@ class ModalTest extends StatefulComponent {
           content: "Toggle & Checkbox",
           textProps: DCFTextProps(
             fontSize: 18,
-            fontWeight: "600",
+            fontWeight: DCFFontWeight.semibold,
             color: Colors.black87,
           ),
           layout: LayoutProps(marginBottom: 16, height: 25),
@@ -122,7 +122,7 @@ class ModalTest extends StatefulComponent {
           content: "Alert Components",
           textProps: DCFTextProps(
             fontSize: 18,
-            fontWeight: "600",
+            fontWeight: DCFFontWeight.semibold,
             color: Colors.black87,
           ),
           layout: LayoutProps(marginBottom: 16, height: 25),
@@ -183,13 +183,29 @@ class ModalTest extends StatefulComponent {
 
         // Native DCFModal - true native modal presentation
         DCFModal(
+          header: DCFModalHeader(
+            title: "Native Modal Example",
+           
+            prefixActions: [
+              DCFModalHeaderAction(
+                title: "close",
+                onTap: (v) {
+                  print("header action pressed: ${v['title']}");
+                },
+              ),
+            ],
+          ),
           visible: modalVisible.state,
-          title: "Native Modal",
-          detents: [
-            DCFModalDetents.small,
-            DCFModalDetents.medium,
-            DCFModalDetents.large,
-          ],
+          
+          // Handle header action events at the modal level
+          // onHeaderAction: (data) {
+          //   print("Header action pressed: ${data['title']}");
+          //   if (data['title'] == 'close') {
+          //     modalVisible.setState(false);
+          //   }
+          // },
+
+          detents: [DCFModalDetents.large],
           showDragIndicator: true,
           onDismiss: (data) {
             print('🔥 Native Modal onDismiss called');
@@ -209,7 +225,7 @@ class ModalTest extends StatefulComponent {
                   content: "🚀 This is a true native modal!",
                   textProps: DCFTextProps(
                     fontSize: 18,
-                    fontWeight: "bold",
+                    fontWeight: DCFFontWeight.bold,
                     color: Colors.black87,
                   ),
                   layout: LayoutProps(marginBottom: 16, height: 25),
@@ -253,7 +269,7 @@ class ModalTest extends StatefulComponent {
 
         DCFModal(
           visible: modalVisible2.state,
-          title: "Native Modal 2",
+
           detents: [
             DCFModalDetents.small,
             DCFModalDetents.medium,
@@ -278,7 +294,7 @@ class ModalTest extends StatefulComponent {
                   content: "🚀 This is a true native modal! 2",
                   textProps: DCFTextProps(
                     fontSize: 18,
-                    fontWeight: "bold",
+                    fontWeight: DCFFontWeight.bold,
                     color: Colors.black87,
                   ),
                   layout: LayoutProps(marginBottom: 16, height: 25),
@@ -310,6 +326,7 @@ class ModalTest extends StatefulComponent {
 
         // Alert Component
         DCFAlert(
+          adaptive: false,
           visible: alertVisible.state,
           title: "Test Alert",
           message: "This is a test alert message with custom actions!",

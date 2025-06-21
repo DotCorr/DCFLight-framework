@@ -15,7 +15,6 @@ export '../touchable_opacity_component.dart';
 export '../scroll_view_component.dart';
 export '../gesture_detector_component.dart';
 export '../animated_view_component.dart';
-export '../animated_text_component.dart';
 export '../svg_component.dart';
 export '../icon_component.dart';
 export '../safe_area_view_component.dart';
@@ -26,13 +25,16 @@ export '../dropdown_component.dart';
 export '../flat_list_component.dart';
 
 // 🚀 Export NEW primitive components
-export '../modal_component.dart'; // Old modal (for compatibility)
-// Remove portal_component export since DCFPortal was removed and portal functionality is now internal
+export '../modal_component.dart';
 export '../toggle_component.dart';
 export '../checkbox_component.dart';
-export '../swipeable_view_component.dart';
+export '../segmented_control_component.dart';
 
 // 🚀 Export ADVANCED primitive components
 export '../slider_component.dart';
 export '../spinner_component.dart';
 export '../alert_component.dart';
+
+// 🚀 Export CRITICAL primitive components
+export '../webview_component.dart';
+// URL wrapper removed - use DCFGestureDetector + manual URL opening instead

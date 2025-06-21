@@ -35,17 +35,17 @@ class DCFCheckboxComponent: NSObject, DCFComponent {
         }
          // Apply initial color props if provided
         if let activeColor = props["activeColor"] as? String,
-           let color = UIColor(hexString: activeColor) {
+           let color = ColorUtilities.color(fromHexString: activeColor) {
             checkbox.checkedColor = color
         }
 
         if let inactiveColor = props["inactiveColor"] as? String,
-           let color = UIColor(hexString: inactiveColor) {
+           let color = ColorUtilities.color(fromHexString: inactiveColor) {
             checkbox.uncheckedColor = color
         }
 
         if let checkmarkColor = props["checkmarkColor"] as? String,
-           let color = UIColor(hexString: checkmarkColor) {
+           let color = ColorUtilities.color(fromHexString: checkmarkColor) {
             checkbox.checkmarkColor = color
         }
 
@@ -78,15 +78,15 @@ class DCFCheckboxComponent: NSObject, DCFComponent {
         
         // Update colors
         if let checkedColor = props["checkedColor"] as? String {
-            checkbox.checkedColor = UIColor(hexString: checkedColor) ?? checkbox.checkedColor
+            checkbox.checkedColor = ColorUtilities.color(fromHexString: checkedColor) ?? checkbox.checkedColor
         }
         
         if let uncheckedColor = props["uncheckedColor"] as? String {
-            checkbox.uncheckedColor = UIColor(hexString: uncheckedColor) ?? checkbox.uncheckedColor
+            checkbox.uncheckedColor = ColorUtilities.color(fromHexString: uncheckedColor) ?? checkbox.uncheckedColor
         }
         
         if let checkmarkColor = props["checkmarkColor"] as? String {
-            checkbox.checkmarkColor = UIColor(hexString: checkmarkColor) ?? checkbox.checkmarkColor
+            checkbox.checkmarkColor = ColorUtilities.color(fromHexString: checkmarkColor) ?? checkbox.checkmarkColor
         }
         
         // Update size

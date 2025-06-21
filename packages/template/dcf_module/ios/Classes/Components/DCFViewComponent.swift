@@ -62,6 +62,4 @@ class DCFViewComponent: NSObject, DCFComponent {
         
         return true
     }
-    
-    // Use default implementations for the remaining methods
 }

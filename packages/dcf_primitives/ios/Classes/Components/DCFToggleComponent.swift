@@ -57,15 +57,15 @@ class DCFToggleComponent: NSObject, DCFComponent {
         
         // Update colors
         if let activeTrackColor = props["activeTrackColor"] as? String {
-            switchControl.onTintColor = UIColor(hexString: activeTrackColor)
+            switchControl.onTintColor = ColorUtilities.color(fromHexString: activeTrackColor)
         }
         
         if let inactiveTrackColor = props["inactiveTrackColor"] as? String {
-            switchControl.backgroundColor = UIColor(hexString: inactiveTrackColor)
+            switchControl.backgroundColor = ColorUtilities.color(fromHexString: inactiveTrackColor)
         }
         
         if let activeThumbColor = props["activeThumbColor"] as? String {
-            switchControl.thumbTintColor = UIColor(hexString: activeThumbColor)
+            switchControl.thumbTintColor = ColorUtilities.color(fromHexString: activeThumbColor)
         }
         
         if let inactiveThumbColor = props["inactiveThumbColor"] as? String {
@@ -81,46 +81,5 @@ class DCFToggleComponent: NSObject, DCFComponent {
         propagateEvent(on: sender, eventName: "onValueChange", data: [
             "value": sender.isOn
         ])
-    }
-}
-
-// Extension for hex color support
-extension UIColor {
-    convenience init?(hexString: String) {
-        let r, g, b, a: CGFloat
-        
-        if hexString.hasPrefix("#") {
-            let start = hexString.index(hexString.startIndex, offsetBy: 1)
-            let hexColor = String(hexString[start...])
-            
-            if hexColor.count == 8 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-                
-                if scanner.scanHexInt64(&hexNumber) {
-                    a = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                    r = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    g = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    b = CGFloat(hexNumber & 0x000000ff) / 255
-                    
-                    self.init(red: r, green: g, blue: b, alpha: a)
-                    return
-                }
-            } else if hexColor.count == 6 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-                
-                if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    g = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    b = CGFloat(hexNumber & 0x000000ff) / 255
-                    
-                    self.init(red: r, green: g, blue: b, alpha: 1.0)
-                    return
-                }
-            }
-        }
-        
-        return nil
     }
 }

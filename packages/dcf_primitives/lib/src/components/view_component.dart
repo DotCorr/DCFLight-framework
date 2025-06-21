@@ -22,12 +22,16 @@ class DCFView extends StatelessComponent {
   /// Event handlers
   final Map<String, dynamic>? events;
 
+  /// Whether to use adaptive theming
+  final bool adaptive;
+
   /// Create a view component
   DCFView({
     this.layout = const LayoutProps(padding: 8,flex: 1),
     this.styleSheet = const StyleSheet(),
     this.children = const [],
     this.events,
+    this.adaptive = true,
     super.key,
   });
 
@@ -38,6 +42,7 @@ class DCFView extends StatelessComponent {
       props: {
         ...layout.toMap(),
         ...styleSheet.toMap(),
+        'adaptive': adaptive,
         ...(events ?? {}),
       },
       children: children,

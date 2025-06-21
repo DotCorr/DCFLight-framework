@@ -22,12 +22,16 @@ class DCFSVGProps {
   /// The height of the SVG
   final double? height;
   
+  /// Whether to use adaptive theming
+  final bool adaptive;
+  
   /// Create SVG props
   const DCFSVGProps({
     required this.source,
     this.isAsset = false,
     this.width,
     this.height,
+    this.adaptive = true,
   });
   
   /// Convert to props map
@@ -37,6 +41,7 @@ class DCFSVGProps {
       'isAsset': isAsset,
       if (width != null) 'width': width,
       if (height != null) 'height': height,
+      'adaptive': adaptive,
     };
   }
 }

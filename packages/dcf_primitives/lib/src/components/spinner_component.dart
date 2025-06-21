@@ -25,6 +25,9 @@ class DCFSpinner extends StatelessComponent {
   /// Whether to hide when stopped
   final bool hidesWhenStopped;
   
+  /// Whether to use adaptive theming (system colors)
+  final bool adaptive;
+  
   /// The layout properties
   final LayoutProps layout;
   
@@ -40,6 +43,7 @@ class DCFSpinner extends StatelessComponent {
     this.style = 'medium',
     this.color,
     this.hidesWhenStopped = true,
+    this.adaptive = true,
     this.layout = const LayoutProps(),
     this.styleSheet = const StyleSheet(),
     this.events,
@@ -54,6 +58,7 @@ class DCFSpinner extends StatelessComponent {
       'animating': animating,
       'style': style,
       'hidesWhenStopped': hidesWhenStopped,
+      'adaptive': adaptive,
       ...layout.toMap(),
       ...styleSheet.toMap(),
       ...eventMap,

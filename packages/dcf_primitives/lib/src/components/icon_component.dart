@@ -23,12 +23,16 @@ class DCFIconProps {
   /// Package where the icon is defined
   final String package;
 
+  /// Whether to use adaptive theming
+  final bool adaptive;
+
   /// Create icon props
   const DCFIconProps({
     required this.name,
     // this.size = 24.0,
     this.color,
     this.package = 'dcf_primitives',
+    this.adaptive = true,
   });
 
   /// Convert to props map
@@ -38,6 +42,7 @@ class DCFIconProps {
       // 'size': size,
       'package': package,
       'isRelativePath': false,
+      'adaptive': adaptive,
       if (color != null) 'color': '#${color!.value.toRadixString(16).padLeft(8, '0')}',
     };
   }

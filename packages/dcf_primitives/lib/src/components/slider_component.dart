@@ -37,6 +37,9 @@ class DCFSlider extends StatelessComponent {
   /// Whether the slider is disabled
   final bool disabled;
   
+  /// Whether to use adaptive theming (system colors)
+  final bool adaptive;
+  
   /// Color of the minimum track (left side)
   final Color? minimumTrackTintColor;
   
@@ -65,6 +68,7 @@ class DCFSlider extends StatelessComponent {
     this.onSlidingStart,
     this.onSlidingComplete,
     this.disabled = false,
+    this.adaptive = true,
     this.minimumTrackTintColor,
     this.maximumTrackTintColor,
     this.thumbTintColor,
@@ -95,6 +99,7 @@ class DCFSlider extends StatelessComponent {
       'minimumValue': minimumValue,
       'maximumValue': maximumValue,
       'disabled': disabled,
+      'adaptive': adaptive,
       ...layout.toMap(),
       ...styleSheet.toMap(),
       ...eventMap,

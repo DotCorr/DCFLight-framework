@@ -36,27 +36,24 @@ import dcflight
         DCFComponentRegistry.shared.registerComponent("TouchableOpacity", componentClass: DCFTouchableOpacityComponent.self)
         // Register animation primitives
         DCFComponentRegistry.shared.registerComponent("AnimatedView", componentClass: DCFAnimatedViewComponent.self)
-        DCFComponentRegistry.shared.registerComponent("AnimatedText", componentClass: DCFAnimatedTextComponent.self)
         
         // Register new cross-platform primitives
         DCFComponentRegistry.shared.registerComponent("TextInput", componentClass: DCFTextInputComponent.self)
         DCFComponentRegistry.shared.registerComponent("Dropdown", componentClass: DCFDropdownComponent.self)
         
         // 🚀 Register NEW primitive components
-       
         DCFComponentRegistry.shared.registerComponent("Modal", componentClass: DCFModalComponent.self)
-       
         DCFComponentRegistry.shared.registerComponent("Toggle", componentClass: DCFToggleComponent.self)
-        
         DCFComponentRegistry.shared.registerComponent("Checkbox", componentClass: DCFCheckboxComponent.self)
-       
         DCFComponentRegistry.shared.registerComponent("Alert", componentClass: DCFAlertComponent.self)
-
-        DCFComponentRegistry.shared.registerComponent("SwipeableView", componentClass: DCFSwipeableViewComponent.self)
+        DCFComponentRegistry.shared.registerComponent("SegmentedControl", componentClass: DCFSegmentedControlComponent.self)
         
-      
+        // 🚀 Register ADVANCED primitive components
         DCFComponentRegistry.shared.registerComponent("Slider", componentClass: DCFSliderComponent.self)
-       
         DCFComponentRegistry.shared.registerComponent("Spinner", componentClass: DCFSpinnerComponent.self)
+        
+        // 🚀 Register CRITICAL primitive components
+        DCFComponentRegistry.shared.registerComponent("WebView", componentClass: DCFWebViewComponent.self)
+        // UrlWrapperView removed - use DCFGestureDetector + manual URL opening instead
     }
 }

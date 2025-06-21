@@ -25,8 +25,11 @@ class DCFAnimatedView extends StatelessComponent {
   /// Event handlers
   final Map<String, dynamic>? events;
   
-  /// Animation end event handler - receives Map<dynamic, dynamic> with animation data
+  /// Animation end event handler - receives `Map<dynamic, dynamic>` with animation data
   final Function(Map<dynamic, dynamic>)? onAnimationEnd;
+  
+  /// Whether to use adaptive theming
+  final bool adaptive;
   
   /// Create an animated view component
   DCFAnimatedView({
@@ -36,6 +39,7 @@ class DCFAnimatedView extends StatelessComponent {
     this.styleSheet = const StyleSheet(),
     this.onAnimationEnd,
     this.events,
+    this.adaptive = true,
     super.key,
   });
   
@@ -52,6 +56,7 @@ class DCFAnimatedView extends StatelessComponent {
       type: 'AnimatedView',
       props: {
         'animation': animation,
+        'adaptive': adaptive,
         ...layout.toMap(),
         ...styleSheet.toMap(),
         ...eventMap,

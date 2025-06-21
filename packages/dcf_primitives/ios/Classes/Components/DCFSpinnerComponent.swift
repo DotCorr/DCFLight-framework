@@ -79,7 +79,7 @@ class DCFSpinnerComponent: NSObject, DCFComponent {
         
         // Update color
         if let color = props["color"] as? String,
-           let spinnerColor = UIColor(hexString: color) {
+           let spinnerColor = ColorUtilities.color(fromHexString: color) {
             spinner.color = spinnerColor
         }
         

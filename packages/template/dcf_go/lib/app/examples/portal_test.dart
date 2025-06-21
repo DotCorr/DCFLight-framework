@@ -1,10 +1,3 @@
-/*
- * Copyright (c) Dotcorr Studio. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import 'package:dcflight/dcflight.dart';
 import 'package:dcflight/framework/renderer/vdom/portal/explicit_portal_api.dart';
 
@@ -21,7 +14,7 @@ class PortalTest extends StatefulComponent {
         // Title
         DCFText(
           content: '🎯 Portal Test',
-          textProps: DCFTextProps(fontSize: 24, fontWeight: "bold"),
+          textProps: DCFTextProps(fontSize: 24, fontWeight: DCFFontWeight.bold),
           layout: LayoutProps(marginBottom: 20.0, height: 40.0),
         ),
 
@@ -49,7 +42,7 @@ class PortalTest extends StatefulComponent {
           children: [
             DCFText(
               content: 'Portal Target Area',
-              textProps: DCFTextProps(fontSize: 18, fontWeight: "bold"),
+              textProps: DCFTextProps(fontSize: 18, fontWeight: DCFFontWeight.bold),
               layout: LayoutProps(marginBottom: 16.0, height: 30.0),
             ),
             DCFText(
@@ -102,7 +95,7 @@ class PortalTest extends StatefulComponent {
                         content: 'Portal Content #${counter.state + 1}',
                         textProps: DCFTextProps(
                           fontSize: 18,
-                          fontWeight: "bold",
+                          fontWeight: DCFFontWeight.bold,
                         ),
                         layout: LayoutProps(marginBottom: 8.0, height: 25.0),
                       ),
@@ -156,7 +149,7 @@ class PortalTest extends StatefulComponent {
                   textProps: DCFTextProps(
                     color: Colors.white,
                     fontSize: 16,
-                    fontWeight: "bold",
+                    fontWeight: DCFFontWeight.bold,
                   ),
                   layout: LayoutProps(height: 25.0),
                 ),
@@ -194,7 +187,7 @@ class PortalTest extends StatefulComponent {
                   textProps: DCFTextProps(
                     color: Colors.white,
                     fontSize: 16,
-                    fontWeight: "bold",
+                    fontWeight: DCFFontWeight.bold,
                   ),
                   layout: LayoutProps(height: 25.0),
                 ),
@@ -229,7 +222,7 @@ class PortalTest extends StatefulComponent {
                   textProps: DCFTextProps(
                     color: Colors.white,
                     fontSize: 16,
-                    fontWeight: "bold",
+                    fontWeight: DCFFontWeight.bold,
                   ),
                   layout: LayoutProps(height: 25.0),
                 ),
@@ -258,7 +251,7 @@ class PortalTest extends StatefulComponent {
                   'Status: ${activePortalId.state != null ? "Portal Active" : "No Active Portal"}',
               textProps: DCFTextProps(
                 fontSize: 16,
-                fontWeight: "bold",
+                fontWeight: DCFFontWeight.bold,
                 color:
                     activePortalId.state != null
                         ? Colors.green[700]

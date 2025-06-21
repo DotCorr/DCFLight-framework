@@ -61,6 +61,9 @@ class DCFDropdownProps {
   /// Whether dropdown is disabled
   final bool disabled;
   
+  /// Whether to use adaptive theming
+  final bool adaptive;
+  
   /// Create dropdown props
   const DCFDropdownProps({
     this.visible = false,
@@ -80,6 +83,7 @@ class DCFDropdownProps {
     this.multiSelect = false,
     this.selectedValues,
     this.disabled = false,
+    this.adaptive = true,
   });
   
   /// Convert to props map
@@ -106,6 +110,7 @@ class DCFDropdownProps {
       'multiSelect': multiSelect,
       'selectedValues': selectedValues,
       'disabled': disabled,
+      'adaptive': adaptive,
     };
   }
 }

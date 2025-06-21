@@ -50,6 +50,7 @@ class DCFTextInput extends StatelessComponent {
   final Function(Map<dynamic, dynamic>)? onKeyPress;
   final Function(Map<dynamic, dynamic>)? onSelectionChange;
   final Function(Map<dynamic, dynamic>)? onEndEditing;
+  final bool adaptive;
   
   DCFTextInput({
     super.key,
@@ -92,6 +93,7 @@ class DCFTextInput extends StatelessComponent {
     this.onKeyPress,
     this.onSelectionChange,
     this.onEndEditing,
+    this.adaptive = true,
   });
 
   @override
@@ -141,6 +143,7 @@ class DCFTextInput extends StatelessComponent {
         'fontSize': fontSize,
         'fontWeight': fontWeight,
         'fontFamily': fontFamily,
+        'adaptive': adaptive,
         ...layout?.toMap() ?? {},
         ...styleSheet?.toMap() ?? {},
         ...events,

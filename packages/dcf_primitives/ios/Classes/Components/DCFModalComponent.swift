@@ -161,22 +161,34 @@ class DCFModalComponent: NSObject, DCFComponent {
         modalVC.view.setNeedsLayout()
         modalVC.view.layoutIfNeeded()
         
-        // ✅ GIVE ABSTRACTION LAYER FULL CONTROL: No explicit margins/padding, full width/height
+        // ✅ Calculate available content area, accounting for header if present
         let modalFrame = modalVC.view.bounds
+        var availableY: CGFloat = modalFrame.minY
+        var availableHeight: CGFloat = modalFrame.height
+        
+        // Check if header exists and adjust content area
+        let headerView = modalVC.view.subviews.first { $0.tag == 999 }
+        if let header = headerView {
+            let headerBottom = header.frame.maxY
+            availableY = headerBottom
+            availableHeight = modalFrame.height - headerBottom
+            print("📏 Header found - adjusted content area: y=\(availableY), height=\(availableHeight)")
+        } else {
+            print("📏 No header - using full modal bounds")
+        }
+        
         let availableWidth = modalFrame.width
-        let availableHeight = modalFrame.height
         
         print("📏 Modal FULL sizing - modal bounds: \(modalFrame)")
-        print("📏 Modal FULL sizing - available: \(availableWidth)x\(availableHeight)")
+        print("📏 Modal FULL sizing - available content: \(availableWidth)x\(availableHeight) at y=\(availableY)")
         
-        // ✅ ABSTRACTION LAYER CONTROL: Use the full modal bounds, no automatic safe area adjustments
-        // Let the Dart abstraction layer handle safe areas, padding, and margins as it sees fit
-        let contentFrame = modalFrame
-        print("📏 Content frame (FULL modal bounds): \(contentFrame)")
+        // ✅ ABSTRACTION LAYER CONTROL: Use the calculated content bounds
+        let contentFrame = CGRect(x: modalFrame.minX, y: availableY, width: availableWidth, height: availableHeight)
+        print("📏 Content frame (accounting for header): \(contentFrame)")
         
-        // ✅ AUTO-FILL: Single child fills the entire modal space, let abstraction layer handle layout
+        // ✅ AUTO-FILL: Single child fills the entire content space, let abstraction layer handle layout
         if childViews.count == 1, let childView = childViews.first {
-            print("🎯 Single child: giving it FULL modal space for abstraction layer control")
+            print("🎯 Single child: giving it content space for abstraction layer control")
             
             // Remove from any previous parent
             childView.removeFromSuperview()
@@ -192,10 +204,10 @@ class DCFModalComponent: NSObject, DCFComponent {
             childView.alpha = 1.0
             print("👁️ Made child visible: hidden=\(childView.isHidden), alpha=\(childView.alpha)")
             
-            // ✅ FULL FRAME: Give child the entire content area
+            // ✅ CONTENT FRAME: Give child the content area (below header)
             childView.frame = contentFrame
             
-            print("📐 Child given FULL modal frame: \(childView.frame)")
+            print("📐 Child given content frame: \(childView.frame)")
             
             // ✅ Force layout update to ensure Yoga gets the correct size
             childView.setNeedsLayout()
@@ -250,7 +262,7 @@ class DCFModalComponent: NSObject, DCFComponent {
             }
         }
         
-        print("✅ Modal content positioned with FULL space control given to abstraction layer")
+        print("✅ Modal content positioned with content space control given to abstraction layer")
     }
     // MARK: - Modal Operation Queue System (replaces old presentModal method)
     
@@ -471,6 +483,22 @@ class DCFModalComponent: NSObject, DCFComponent {
         } else {
             // Fallback for older iOS versions
             modalVC.modalPresentationStyle = .formSheet
+            
+            // ✅ Apply corner radius for non-sheet presentations
+            var cornerRadius: CGFloat = 16.0
+            if let radius = props["cornerRadius"] as? CGFloat {
+                cornerRadius = radius
+            } else if let radius = props["cornerRadius"] as? Double {
+                cornerRadius = CGFloat(radius)
+            } else if let radius = props["cornerRadius"] as? Int {
+                cornerRadius = CGFloat(radius)
+            } else if let radius = props["cornerRadius"] as? NSNumber {
+                cornerRadius = CGFloat(radius.doubleValue)
+            }
+            
+            modalVC.view.layer.cornerRadius = cornerRadius
+            modalVC.view.layer.masksToBounds = true
+            print("✅ DCFModalComponent: Set fallback modal corner radius to: \(cornerRadius)")
         }
         
         // Configure transition style
@@ -609,9 +637,24 @@ class DCFModalViewController: UIViewController, UISheetPresentationControllerDel
         if !contentChildren.isEmpty {
             print("📐 Modal bounds changed, updating \(contentChildren.count) children sizes")
             
-            // Calculate the available content area - give abstraction layer full control
-            let contentFrame = view.bounds
-            print("📐 Modal layout bounds: \(contentFrame) (no automatic safe area adjustments)")
+            // Calculate the available content area - account for header if present
+            let modalFrame = view.bounds
+            var availableY: CGFloat = modalFrame.minY
+            var availableHeight: CGFloat = modalFrame.height
+            
+            // Check if header exists and adjust content area
+            let headerView = view.subviews.first { $0.tag == 999 }
+            if let header = headerView {
+                let headerBottom = header.frame.maxY
+                availableY = headerBottom
+                availableHeight = modalFrame.height - headerBottom
+                print("📐 Layout: Header found - adjusted content area: y=\(availableY), height=\(availableHeight)")
+            } else {
+                print("📐 Layout: No header - using full modal bounds")
+            }
+            
+            let contentFrame = CGRect(x: modalFrame.minX, y: availableY, width: modalFrame.width, height: availableHeight)
+            print("📐 Modal layout content frame: \(contentFrame)")
             
             // Update child frames to match new modal size
             if contentChildren.count == 1, let childView = contentChildren.first {
@@ -883,13 +926,250 @@ class DCFModalViewController: UIViewController, UISheetPresentationControllerDel
             print("✅ DCFModalViewController: Set sheet preferredCornerRadius to: \(cornerRadius)")
         }
         
-        // ✅ REMOVED: No automatic title rendering - let abstraction layer handle titles
-        // The title prop is still available in modalProps for the abstraction layer to use
-        // but we don't force any specific title rendering or safe area constraints
+        // ✅ NEW: Setup modal header if provided
+        setupModalHeader()
         
         // Propagate onOpen event
         if let sourceView = sourceView {
             propagateEvent(on: sourceView, eventName: "onOpen", data: [:])
         }
+    }
+    
+    private func setupModalHeader() {
+        guard let headerData = modalProps["header"] as? [String: Any] else {
+            print("📝 No header data found, skipping header setup")
+            return
+        }
+        
+        print("📝 Setting up modal header with data: \(headerData)")
+        
+        // Remove existing header if any
+        view.subviews.forEach { subview in
+            if subview.tag == 999 { // Header tag
+                subview.removeFromSuperview()
+            }
+        }
+        
+        // Create header container
+        let headerContainer = UIView()
+        headerContainer.tag = 999 // Mark as header
+        headerContainer.backgroundColor = UIColor.systemBackground
+        
+        // Parse header properties
+        let title = headerData["title"] as? String ?? ""
+        let adaptive = headerData["adaptive"] as? Bool ?? true
+        
+        // Create title label
+        let titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 1
+        
+        // Configure title styling
+        if let fontFamily = headerData["fontFamily"] as? String {
+            var fontSize: CGFloat = 17.0
+            if let size = headerData["fontSize"] as? Double {
+                fontSize = CGFloat(size)
+            } else if let size = headerData["fontSize"] as? NSNumber {
+                fontSize = CGFloat(size.doubleValue)
+            }
+            
+            var fontWeight: UIFont.Weight = .semibold
+            if let weight = headerData["fontWeight"] as? String {
+                switch weight.lowercased() {
+                case "thin":
+                    fontWeight = .thin
+                case "light":
+                    fontWeight = .light
+                case "regular":
+                    fontWeight = .regular
+                case "medium":
+                    fontWeight = .medium
+                case "semibold":
+                    fontWeight = .semibold
+                case "bold":
+                    fontWeight = .bold
+                case "heavy":
+                    fontWeight = .heavy
+                case "black":
+                    if #available(iOS 8.2, *) {
+                        fontWeight = .black
+                    } else {
+                        fontWeight = .heavy
+                    }
+                default:
+                    fontWeight = .semibold
+                }
+            }
+            
+            titleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight)
+        } else {
+            titleLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .semibold)
+        }
+        
+        // Configure title color
+        if let titleColorHex = headerData["titleColor"] as? String {
+            titleLabel.textColor = ColorUtilities.color(fromHexString: titleColorHex) ?? (adaptive ? UIColor.label : UIColor.black)
+        } else {
+            titleLabel.textColor = adaptive ? UIColor.label : UIColor.black
+        }
+        
+        // Setup header layout
+        headerContainer.addSubview(titleLabel)
+        
+        // Configure title constraints
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        var titleConstraints: [NSLayoutConstraint] = []
+        
+        // Handle prefix actions (left side)
+        var leftAnchor = headerContainer.leadingAnchor
+        let leftPadding: CGFloat = 16.0
+        
+        if let prefixActions = headerData["prefixActions"] as? [[String: Any]], !prefixActions.isEmpty {
+            var previousButton: UIButton?
+            
+            for (index, actionData) in prefixActions.enumerated() {
+                let button = createHeaderActionButton(actionData: actionData, adaptive: adaptive)
+                headerContainer.addSubview(button)
+                
+                button.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    button.centerYAnchor.constraint(equalTo: headerContainer.centerYAnchor),
+                    button.heightAnchor.constraint(equalToConstant: 44.0)
+                ])
+                
+                if let prev = previousButton {
+                    NSLayoutConstraint.activate([
+                        button.leadingAnchor.constraint(equalTo: prev.trailingAnchor, constant: 8.0)
+                    ])
+                } else {
+                    NSLayoutConstraint.activate([
+                        button.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor, constant: leftPadding)
+                    ])
+                }
+                
+                previousButton = button
+            }
+            
+            if let lastButton = previousButton {
+                leftAnchor = lastButton.trailingAnchor
+                titleConstraints.append(titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 16.0))
+            }
+        } else {
+            titleConstraints.append(titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerContainer.leadingAnchor, constant: leftPadding))
+        }
+        
+        // Handle suffix actions (right side)
+        var rightAnchor = headerContainer.trailingAnchor
+        let rightPadding: CGFloat = 16.0
+        
+        // Handle suffix actions
+        if let suffixActions = headerData["suffixActions"] as? [[String: Any]], !suffixActions.isEmpty {
+            var previousButton: UIButton?
+            
+            for actionData in suffixActions.reversed() {
+                let button = createHeaderActionButton(actionData: actionData, adaptive: adaptive)
+                headerContainer.addSubview(button)
+                
+                button.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    button.centerYAnchor.constraint(equalTo: headerContainer.centerYAnchor),
+                    button.heightAnchor.constraint(equalToConstant: 44.0)
+                ])
+                
+                if let prev = previousButton {
+                    NSLayoutConstraint.activate([
+                        button.trailingAnchor.constraint(equalTo: prev.leadingAnchor, constant: -8.0)
+                    ])
+                } else {
+                    NSLayoutConstraint.activate([
+                        button.trailingAnchor.constraint(equalTo: rightAnchor, constant: -rightPadding)
+                    ])
+                }
+                
+                previousButton = button
+            }
+            
+            if let lastButton = previousButton {
+                rightAnchor = lastButton.leadingAnchor
+                if titleConstraints.last?.constant == -16.0 { // Update existing trailing constraint
+                    titleConstraints.removeLast()
+                }
+                titleConstraints.append(titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: -16.0))
+            }
+        }
+        
+        // Finalize title constraints
+        titleConstraints.append(contentsOf: [
+            titleLabel.centerXAnchor.constraint(equalTo: headerContainer.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: headerContainer.centerYAnchor)
+        ])
+        
+        NSLayoutConstraint.activate(titleConstraints)
+        
+        // Add header to modal view
+        view.addSubview(headerContainer)
+        
+        // Configure header container constraints
+        headerContainer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            headerContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerContainer.heightAnchor.constraint(equalToConstant: 56.0)
+        ])
+        
+        // Add separator line
+        let separator = UIView()
+        separator.backgroundColor = adaptive ? UIColor.separator : UIColor.lightGray
+        headerContainer.addSubview(separator)
+        
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            separator.bottomAnchor.constraint(equalTo: headerContainer.bottomAnchor),
+            separator.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor),
+            separator.heightAnchor.constraint(equalToConstant: 0.5)
+        ])
+        
+        print("✅ Modal header setup completed")
+    }
+    
+    private func createHeaderActionButton(actionData: [String: Any], adaptive: Bool) -> UIButton {
+        let button = UIButton(type: .system)
+        
+        let title = actionData["title"] as? String ?? "Action"
+        let iconAsset = actionData["iconAsset"] as? String
+        
+        if let iconAsset = iconAsset {
+            // Create button with icon and title
+            button.setTitle(title, for: .normal)
+            // TODO: Load icon from asset if needed
+            button.setImage(UIImage(systemName: "star"), for: .normal) // Placeholder
+        } else {
+            button.setTitle(title, for: .normal)
+        }
+        
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
+        button.setTitleColor(adaptive ? UIColor.systemBlue : UIColor.blue, for: .normal)
+        
+        // All header actions use the same handler
+        button.addTarget(self, action: #selector(headerActionTapped(_:)), for: .touchUpInside)
+        
+        return button
+    }
+    
+    @objc private func headerActionTapped(_ sender: UIButton) {
+        print("🔘 Header action tapped: \(sender.title(for: .normal) ?? "Unknown")")
+        
+   
+        let buttonTitle = sender.title(for: .normal) ?? ""
+        
+        // Use propagateEvent like other DCFlight components
+        propagateEvent(on: sourceView ?? UIView(), eventName: "onHeaderAction", data: [
+            "title": buttonTitle,
+            "timestamp": Date().timeIntervalSince1970
+        ])
     }
 }

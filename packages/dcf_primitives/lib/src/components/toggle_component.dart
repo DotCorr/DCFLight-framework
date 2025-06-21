@@ -22,6 +22,9 @@ class DCFToggle extends StatelessComponent {
   /// Whether the toggle is disabled
   final bool disabled;
   
+  /// Whether to use adaptive theming (system colors)
+  final bool adaptive;
+  
   /// Track color when toggle is on
   final Color? activeTrackColor;
   
@@ -51,6 +54,7 @@ class DCFToggle extends StatelessComponent {
     required this.value,
     this.onValueChange,
     this.disabled = false,
+    this.adaptive = true,
     this.activeTrackColor,
     this.inactiveTrackColor,
     this.activeThumbColor,
@@ -73,6 +77,7 @@ class DCFToggle extends StatelessComponent {
     Map<String, dynamic> props = {
       'value': value,
       'disabled': disabled,
+      'adaptive': adaptive,
       'size': size,
       ...layout.toMap(),
       ...styleSheet.toMap(),

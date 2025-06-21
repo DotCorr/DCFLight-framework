@@ -84,17 +84,17 @@ class DCFSliderComponent: NSObject, DCFComponent {
         
         // Update colors
         if let minTrackColor = props["minimumTrackTintColor"] as? String,
-           let color = UIColor(hexString: minTrackColor) {
+           let color = ColorUtilities.color(fromHexString: minTrackColor) {
             slider.minimumTrackTintColor = color
         }
         
         if let maxTrackColor = props["maximumTrackTintColor"] as? String,
-           let color = UIColor(hexString: maxTrackColor) {
+           let color = ColorUtilities.color(fromHexString: maxTrackColor) {
             slider.maximumTrackTintColor = color
         }
         
         if let thumbColor = props["thumbTintColor"] as? String,
-           let color = UIColor(hexString: thumbColor) {
+           let color = ColorUtilities.color(fromHexString: thumbColor) {
             slider.thumbTintColor = color
         }
         

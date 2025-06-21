@@ -49,6 +49,9 @@ class DCFGestureDetector extends StatelessComponent {
   /// Pan end event handler - receives Map<dynamic, dynamic> with gesture data
   final Function(Map<dynamic, dynamic>)? onPanEnd;
   
+  /// Whether to use adaptive theming
+  final bool adaptive;
+  
   /// Create a gesture detector component
   DCFGestureDetector({
     required this.children,
@@ -64,6 +67,7 @@ class DCFGestureDetector extends StatelessComponent {
     this.onPanUpdate,
     this.onPanEnd,
     this.events,
+    this.adaptive = true,
     super.key,
   });
   
@@ -111,6 +115,7 @@ class DCFGestureDetector extends StatelessComponent {
     return DCFElement(
       type: 'GestureDetector',
       props: {
+        'adaptive': adaptive,
         ...layout.toMap(),
         ...styleSheet.toMap(),
         ...eventMap,

@@ -22,12 +22,16 @@ class DCFSVGProps {
   /// The height of the SVG
   final double? height;
   
+  /// Whether to use adaptive theming
+  final bool adaptive;
+  
   /// Create SVG props
   const DCFSVGProps({
     required this.source,
     this.isAsset = false,
     this.width,
     this.height,
+    this.adaptive = true,
   });
   
   /// Convert to props map
@@ -37,6 +41,7 @@ class DCFSVGProps {
       'isAsset': isAsset,
       if (width != null) 'width': width,
       if (height != null) 'height': height,
+      'adaptive': adaptive,
     };
   }
 }
@@ -50,7 +55,7 @@ class DCFSVG extends StatelessComponent {
   final LayoutProps layout;
   
   /// The style properties
-  final StyleSheet style;
+  final StyleSheet styleSheet;
   
   /// Event handlers
   final Map<String, dynamic>? events;
@@ -61,7 +66,7 @@ class DCFSVG extends StatelessComponent {
        this.layout = const LayoutProps(
      height: 20,width: 20
     ),
-    this.style = const StyleSheet(),
+    this.styleSheet = const StyleSheet(),
     this.events,
     super.key,
   });
@@ -73,7 +78,7 @@ class DCFSVG extends StatelessComponent {
       props: {
         ...svgProps.toMap(),
         ...layout.toMap(),
-        ...style.toMap(),
+        ...styleSheet.toMap(),
         ...(events ?? {}),
       },
       children: [],

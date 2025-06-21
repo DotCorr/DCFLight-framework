@@ -16,10 +16,14 @@ class DCFButtonProps {
   /// Disabled state
   final bool disabled;
   
+  /// Whether to use adaptive theming
+  final bool adaptive;
+  
   /// Create button props
   const DCFButtonProps({
     required this.title,
     this.disabled = false,
+    this.adaptive = true,
   });
   
   /// Convert to props map
@@ -27,6 +31,7 @@ class DCFButtonProps {
     return {
       'title': title,
       'disabled': disabled,
+      'adaptive': adaptive,
     };
   }
 }

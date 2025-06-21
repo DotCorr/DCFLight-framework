@@ -22,6 +22,9 @@ class DCFCheckbox extends StatelessComponent {
   /// Whether the checkbox is disabled
   final bool disabled;
 
+  /// Whether to use adaptive theming (system colors)
+  final bool adaptive;
+
   /// Color when checkbox is checked
   final Color? activeColor;
 
@@ -51,6 +54,7 @@ class DCFCheckbox extends StatelessComponent {
     required this.checked,
     this.onValueChange,
     this.disabled = false,
+    this.adaptive = false,
     this.activeColor,
     this.inactiveColor,
     this.checkmarkColor,

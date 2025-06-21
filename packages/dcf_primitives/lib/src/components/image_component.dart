@@ -22,12 +22,16 @@ class DCFImageProps {
   /// Placeholder image to show while loading
   final String? placeholder;
   
+  /// Whether to use adaptive theming
+  final bool adaptive;
+  
   /// Create image props
   const DCFImageProps({
     required this.source,
     this.resizeMode,
     this.fadeDuration,
     this.placeholder,
+    this.adaptive = true,
   });
   
   /// Convert to props map
@@ -35,6 +39,7 @@ class DCFImageProps {
     return {
       'source': source,
       'isRelativePath': false,
+      'adaptive': adaptive,
       if (resizeMode != null) 'resizeMode': resizeMode!.name,
       if (fadeDuration != null) 'fadeDuration': fadeDuration,
       if (placeholder != null) 'placeholder': placeholder,

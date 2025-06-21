@@ -2,9 +2,6 @@ PODS:
   - CocoaLumberjack (3.8.5):
     - CocoaLumberjack/Core (= 3.8.5)
   - CocoaLumberjack/Core (3.8.5)
-  - dcf_module (0.0.1):
-    - dcflight
-    - SVGKit (~> 3.0.0)
   - dcf_primitives (0.0.1):
     - dcflight
     - SVGKit (~> 3.0.0)
@@ -17,7 +14,6 @@ PODS:
   - Yoga (3.2.1)
 
 DEPENDENCIES:
-  - dcf_module (from `.symlinks/plugins/dcf_module/ios`)
   - dcf_primitives (from `.symlinks/plugins/dcf_primitives/ios`)
   - dcflight (from `.symlinks/plugins/dcflight/ios`)
   - Flutter (from `Flutter`)
@@ -29,8 +25,6 @@ SPEC REPOS:
     - Yoga
 
 EXTERNAL SOURCES:
-  dcf_module:
-    :path: ".symlinks/plugins/dcf_module/ios"
   dcf_primitives:
     :path: ".symlinks/plugins/dcf_primitives/ios"
   dcflight:
@@ -40,7 +34,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CocoaLumberjack: 6a459bc897d6d80bd1b8c78482ec7ad05dffc3f0
-  dcf_module: ea7c4a132382885c082ed472788ea8f7d707b555
   dcf_primitives: d79c4f56cf3943beb0f6f2edd96825eb1f0632f3
   dcflight: 1a0a9507326871b1d0bd9aa3b593aa084c280f08
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
